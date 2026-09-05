@@ -3,21 +3,25 @@
   "name": "Speed Duration for YouTube",
   "version": "1.0.0",
   "description": "Zeigt neben YouTubes Zeitangabe die an die Wiedergabegeschwindigkeit angepasste Dauer.",
-  "permissions": ["storage"],
-  "host_permissions": ["https://www.youtube.com/*"],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["src/content/index.js"],
-      "css": ["src/content/style.css"],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "dist/content.js"
+      ],
+      "css": [
+        "src/content/style.css"
+      ],
       "all_frames": true,
       "run_at": "document_idle"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["src/core/*.js", "src/content/*.js", "src/settings.js"],
-      "matches": ["https://www.youtube.com/*"]
     }
   ],
   "action": {

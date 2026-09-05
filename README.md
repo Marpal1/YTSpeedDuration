@@ -16,7 +16,9 @@ Wiedergabegeschwindigkeit wirklich dauert — im Stil von SponsorBlocks Anzeige.
 3. **Entpackte Erweiterung laden** und diesen Projektordner waehlen
 4. YouTube-Tab neu laden
 
-Es gibt keinen Build-Schritt — der Ordner ist die Erweiterung.
+Das gebuendelte Content-Script (`dist/content.js`) ist eingecheckt — vor dem Laden ist
+kein Befehl noetig. Nur wer `src/` aendert, muss `npm run build` laufen lassen
+(siehe [ADR 0002](docs/adr/0002-kein-build-schritt.md)).
 
 ## Bedienen
 
@@ -52,7 +54,8 @@ Skip-Abzug gerechnet. Siehe [ADR 0001](docs/adr/0001-sponsorblock-kopplung-ueber
 
 ```bash
 npm install
-npm test           # 54 Tests
+npm run build      # dist/content.js neu bauen
+npm test           # baut und laeuft 57 Tests
 npm run test:watch
 ```
 
@@ -64,9 +67,16 @@ Aufbau:
 | `src/content/` | die einzige Stelle, die YouTubes und SponsorBlocks DOM kennt |
 | `src/popup/` | Toolbar-Popup |
 | `src/settings.js` | `chrome.storage.sync` hinter synchroner Schnittstelle |
-| `tools/check-selectors.js` | Konsolen-Snippet zur Selektor-Gegenprobe |
+| `build.js` | esbuild-Bundle nach `dist/content.js` (eingecheckt) |
+| `tools/check-selectors.js` | Konsolen-Snippet zur Fehlersuche am echten Player |
 
 Offene Punkte liegen unter `.scratch/speed-duration/issues/`.
+
+## Wenn nichts erscheint
+
+`tools/check-selectors.js` in die DevTools-Konsole des YouTube-Tabs einfuegen. Es sagt
+getrennt, ob das Content-Script gestartet ist (`data-ysd` am `<html>`) und ob es den
+Zeitcontainer findet.
 
 ## Bekannte Grenzen
 

@@ -1,27 +1,37 @@
 /*
  * Einstiegspunkt des Content-Scripts.
  *
- * MV3-Content-Scripts kennen kein `"type": "module"`, deshalb ist diese Datei ein
- * klassisches Script, das die eigentlichen ES-Module nachlaedt. Sie stehen in
- * `web_accessible_resources`. Dadurch laeuft im Browser exakt derselbe Code, den
- * auch Vitest importiert — es gibt keinen Build-Schritt, der dazwischen etwas
- * anderes erzeugen koennte.
+ * Wird von `npm run build` nach `dist/content.js` gebuendelt — siehe ADR 0002.
+ * Der frueher hier verwendete dynamische Import scheiterte in Chromium 130+ an
+ * der CSP der Seite, ohne dass irgendetwas erschien.
  *
  * Das Content-Script laeuft auf ganz youtube.com, nicht nur auf /watch: YouTube
  * navigiert als SPA, ein spaeter Wechsel auf ein Video wuerde sonst nie injiziert.
  * Der Controller wartet selbst darauf, dass ein Player erscheint.
  */
+import { createController } from "./controller.js";
+import { createStore } from "../settings.js";
+
+/**
+ * Zustandsmarker am <html>-Element. Nur zur Fehlersuche von aussen —
+ * `tools/check-selectors.js` liest sie. Kostet nichts und beantwortet die
+ * wichtigste Frage sofort: ist das Content-Script ueberhaupt angekommen?
+ */
+function mark(state, detail) {
+  const root = document.documentElement;
+  root.dataset.ysd = state;
+  if (detail !== undefined) root.dataset.ysdDetail = String(detail);
+}
+
+mark("boot");
+
 (async () => {
   try {
-    const load = (path) => import(chrome.runtime.getURL(path));
-    const [{ createController }, { createStore }] = await Promise.all([
-      load("src/content/controller.js"),
-      load("src/settings.js"),
-    ]);
-
     const store = await createStore(chrome.storage.sync);
     createController({ doc: document, store }).attach();
+    mark("ready");
   } catch (error) {
+    mark("error", error?.message ?? error);
     console.error("[Speed Duration] Start fehlgeschlagen:", error);
   }
 })();

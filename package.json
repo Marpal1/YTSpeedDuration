@@ -5,10 +5,12 @@
   "description": "Zeigt neben YouTubes Zeitangabe die an die Wiedergabegeschwindigkeit angepasste Dauer.",
   "type": "module",
   "scripts": {
-    "test": "vitest run",
+    "build": "node build.js",
+    "test": "node build.js && vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "jsdom": "^26.1.0",
     "vitest": "^3.2.4"
   }
