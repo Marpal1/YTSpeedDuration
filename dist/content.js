@@ -109,8 +109,17 @@
     if (player === null) return false;
     return player.classList.contains("ad-showing") || player.classList.contains("ad-interrupting");
   }
+  function isVisible(element) {
+    const view = element.ownerDocument.defaultView;
+    if (view === null) return false;
+    for (let node = element; node !== null; node = node.parentElement) {
+      if (view.getComputedStyle(node).display === "none") return false;
+    }
+    return true;
+  }
   function isLiveStream(doc) {
-    return doc.querySelector(".html5-video-player.ytp-live") !== null || doc.querySelector(".ytp-live-badge") !== null;
+    const badge = doc.querySelector(".ytp-live-badge");
+    return badge !== null && isVisible(badge);
   }
 
   // src/content/controller.js

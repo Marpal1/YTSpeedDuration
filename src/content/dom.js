@@ -75,10 +75,29 @@ export function isAdShowing(doc) {
 }
 
 /**
+ * Ist das Element sichtbar? Geprueft wird `display` an ihm und an allen
+ * Vorfahren — YouTube blendet Bedienelemente per Stylesheet aus, statt sie aus
+ * dem DOM zu entfernen.
+ */
+function isVisible(element) {
+  const view = element.ownerDocument.defaultView;
+  if (view === null) return false;
+  for (let node = element; node !== null; node = node.parentElement) {
+    if (view.getComputedStyle(node).display === "none") return false;
+  }
+  return true;
+}
+
+/**
  * Laeuft ein Live-Stream? `video.duration` allein reicht nicht: mit DVR liefert
  * YouTube dort eine endliche, staendig wachsende Zahl.
+ *
+ * Entscheidend ist die *Sichtbarkeit* des Live-Abzeichens. Der Knopf steckt in
+ * jedem Player, auch bei ganz normalen Videos — er wird nur ausgeblendet. Auf
+ * seine blosse Anwesenheit zu pruefen erklaerte jedes Video zum Live-Stream und
+ * liess die Anzeige ueberall leer.
  */
 export function isLiveStream(doc) {
-  return doc.querySelector(".html5-video-player.ytp-live") !== null
-    || doc.querySelector(".ytp-live-badge") !== null;
+  const badge = doc.querySelector(".ytp-live-badge");
+  return badge !== null && isVisible(badge);
 }

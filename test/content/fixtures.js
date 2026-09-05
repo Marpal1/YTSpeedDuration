@@ -17,6 +17,7 @@ export function youtubePlayer({ current = "12:34", duration = "45:00", legacy = 
     <div id="movie_player" class="html5-video-player">
       <video></video>
       <div class="ytp-chrome-bottom">
+        <button class="ytp-live-badge" style="display: none">Live</button>
         <div class="ytp-time-display notranslate">${inner}</div>
       </div>
     </div>`;

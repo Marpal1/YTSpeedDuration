@@ -88,20 +88,29 @@ describe("isAdShowing", () => {
 });
 
 describe("isLiveStream", () => {
-  it("erkennt einen Live-Stream am Player, auch wenn die Dauer endlich ist", () => {
-    // Mit DVR liefert video.duration eine endliche, wachsende Zahl —
-    // der Infinity-Test allein reicht dort nicht.
+  it("haelt ein normales Video nicht fuer live, obwohl das Abzeichen im DOM steckt", () => {
+    // YouTube liefert .ytp-live-badge in jedem Player mit und blendet es nur aus.
+    // Auf blosse Anwesenheit zu pruefen liess die Anzeige ueberall leer.
     const doc = youtubePlayer();
+    expect(doc.querySelector(".ytp-live-badge")).not.toBe(null);
     expect(isLiveStream(doc)).toBe(false);
-    doc.querySelector(".html5-video-player").classList.add("ytp-live");
+  });
+
+  it("erkennt einen Live-Stream am sichtbaren Abzeichen", () => {
+    const doc = youtubePlayer();
+    doc.querySelector(".ytp-live-badge").style.display = "";
     expect(isLiveStream(doc)).toBe(true);
   });
 
-  it("erkennt ihn auch am Live-Badge in den Bedienelementen", () => {
+  it("zaehlt ein Abzeichen in einem ausgeblendeten Container nicht", () => {
     const doc = youtubePlayer();
-    const badge = doc.createElement("button");
-    badge.className = "ytp-live-badge";
-    doc.querySelector(".ytp-chrome-bottom").append(badge);
-    expect(isLiveStream(doc)).toBe(true);
+    doc.querySelector(".ytp-live-badge").style.display = "";
+    doc.querySelector(".ytp-chrome-bottom").style.display = "none";
+    expect(isLiveStream(doc)).toBe(false);
+  });
+
+  it("meldet nichts, wenn gar kein Player da ist", () => {
+    document.body.innerHTML = "";
+    expect(isLiveStream(document)).toBe(false);
   });
 });
