@@ -1,0 +1,18 @@
+/*
+ * Nur der eigene Span. Keine Regel fasst YouTubes oder SponsorBlocks Knoten an —
+ * Schrift, Groesse und Farbe werden von der Zeitanzeige geerbt.
+ */
+#ysd-duration {
+  padding-left: 5px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+#ysd-duration:hover {
+  opacity: 1;
+}
+
+/* Ohne Inhalt (1x-Geschwindigkeit, Werbung, Live) auch keinen Platz belegen. */
+#ysd-duration:empty {
+  padding-left: 0;
+}
