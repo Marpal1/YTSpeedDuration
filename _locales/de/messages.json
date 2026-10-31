@@ -1,0 +1,10 @@
+{
+  "extDescription": { "message": "Zeigt neben YouTubes Zeitangabe die an die Wiedergabegeschwindigkeit angepasste Dauer." },
+  "endsAtPrefix": { "message": "fertig" },
+  "modeTotal": { "message": "Gesamtdauer bei aktueller Geschwindigkeit" },
+  "modeRemaining": { "message": "Verbleibende reale Zeit" },
+  "modeEndsAt": { "message": "Uhrzeit am Videoende" },
+  "hideAtNormalSpeed": { "message": "Bei 1x-Geschwindigkeit ausblenden" },
+  "defaultModeLegend": { "message": "Standard-Modus" },
+  "hint": { "message": "Klick auf die Zeit im Player wechselt den Modus." }
+}

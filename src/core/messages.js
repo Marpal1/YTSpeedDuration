@@ -1,17 +1,17 @@
 /**
- * Alle sichtbaren Texte an einer Stelle. Deutsch, fest verdrahtet.
- * Bewusst kein chrome.i18n — bei Bedarf lässt sich dieses Objekt 1:1 nach
- * `_locales/de/messages.json` heben.
+ * Alle sichtbaren Texte der aktiven Sprache. Die Uebersetzungen liegen in
+ * `_locales/`; `getMessage` ist in der Erweiterung `chrome.i18n.getMessage`.
  */
-export const messages = {
-  endsAtPrefix: "fertig",
-  popupTitle: "Speed Duration",
-  modeLabels: {
-    total: "Gesamtdauer bei aktueller Geschwindigkeit",
-    remaining: "Verbleibende reale Zeit",
-    endsAt: "Uhrzeit am Videoende",
-  },
-  hideAtNormalSpeed: "Bei 1x-Geschwindigkeit ausblenden",
-  defaultModeLegend: "Standard-Modus",
-  hint: "Klick auf die Zeit im Player wechselt den Modus.",
-};
+export function createMessages(getMessage) {
+  return {
+    endsAtPrefix: getMessage("endsAtPrefix"),
+    modeLabels: {
+      total: getMessage("modeTotal"),
+      remaining: getMessage("modeRemaining"),
+      endsAt: getMessage("modeEndsAt"),
+    },
+    hideAtNormalSpeed: getMessage("hideAtNormalSpeed"),
+    defaultModeLegend: getMessage("defaultModeLegend"),
+    hint: getMessage("hint"),
+  };
+}

@@ -1,5 +1,4 @@
 import { formatClock } from "./time.js";
-import { messages } from "./messages.js";
 
 /** Speed als Anzeigetext: 1.5 -> "1.5", 2 -> "2". */
 function formatRate(rate) {
@@ -21,7 +20,7 @@ function formatWallClock(timestamp) {
 export function computeDisplay(state) {
   const {
     mode, playbackRate, duration, currentTime, sponsorSeconds, hideAtNormalSpeed, now,
-    isLive, isAd,
+    isLive, isAd, endsAtPrefix,
   } = state;
 
   if (isAd || isLive) return "";
@@ -33,7 +32,7 @@ export function computeDisplay(state) {
 
   if (mode === "endsAt") {
     const endsAt = Math.round((now + remaining * 1000) / 60000) * 60000;
-    return `(${messages.endsAtPrefix} ${formatWallClock(endsAt)})`;
+    return `(${endsAtPrefix} ${formatWallClock(endsAt)})`;
   }
 
   const suffix = ` @${formatRate(playbackRate)}x`;

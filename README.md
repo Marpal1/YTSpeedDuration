@@ -55,6 +55,8 @@ Erweiterungsseite **Neu laden** klicken, YouTube-Tab neu laden.
 | Restzeit | `(~21:38 @1.5x)` | Wie lange es von der aktuellen Position noch läuft |
 | Endzeit | `(fertig 21:47)` | Uhrzeit, zu der es zu Ende ist |
 
+Die Oberfläche folgt der Browsersprache: Deutsch, sonst Englisch.
+
 Sponsorsegmente werden nur bei der **Gesamtdauer** abgezogen. SponsorBlocks Zahl nennt die
 Summe *aller* Segmente, nicht die noch bevorstehenden. Restzeit und Endzeit sind deshalb
 ohne Abzug gerechnet; das `~` kennzeichnet die Restzeit dann als ungenau. Siehe
@@ -96,7 +98,6 @@ Beim Melden eines Problems bitte Browser, Erweiterungs-Version und die Ausgabe d
 - Keine Playlist-Gesamtrestzeit.
 - Nur Desktop-YouTube auf `www.youtube.com`: keine Shorts, kein YouTube Music, kein
   `m.youtube.com`, keine Embeds über `youtube-nocookie.com`.
-- Nur auf Deutsch.
 - Die Kopplung an SponsorBlock läuft über dessen Anzeige (`#sponsorBlockDurationAfterSkips`), es
   gibt keine offizielle Schnittstelle. Ändert sich diese, wird ohne Abzug gerechnet; die Anzeige
   bricht nicht. Ist dort SponsorBlocks Option für die Zeit ohne Skips aus, gibt es nichts zu lesen.
@@ -120,6 +121,7 @@ Test schlägt sonst fehl (siehe [ADR 0002](docs/adr/0002-kein-build-schritt.md))
 | `src/core/` | reine Logik: kein DOM, keine Uhr, kein `chrome.*` |
 | `src/content/` | die einzige Stelle, die YouTubes und SponsorBlocks DOM kennt |
 | `src/popup/` | Toolbar-Popup |
+| `_locales/` | Oberflächentexte auf Deutsch und Englisch |
 | `src/settings.js` | `chrome.storage.sync` hinter synchroner Schnittstelle |
 | `build.js` | esbuild-Bundle nach `dist/content.js` |
 | `tools/` | Konsolen-Snippets zur Fehlersuche am echten Player |

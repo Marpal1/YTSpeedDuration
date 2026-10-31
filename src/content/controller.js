@@ -17,8 +17,9 @@ const VIDEO_EVENTS = ["ratechange", "durationchange", "loadedmetadata", "timeupd
  * @param doc   Das Dokument des Players.
  * @param store Einstellungen: { read(), write(patch), subscribe(cb) }.
  * @param now   Uhr, injiziert.
+ * @param endsAtPrefix Wort vor der Endzeit in der aktiven Sprache.
  */
-export function createController({ doc, store, now = Date.now }) {
+export function createController({ doc, store, now = Date.now, endsAtPrefix }) {
   /** Aufraeumfunktionen des dauerhaften Teils (Bootstrap, Store-Abo). */
   const teardown = [];
   /** Aufraeumfunktionen der Bindung an den aktuellen Player. */
@@ -48,6 +49,7 @@ export function createController({ doc, store, now = Date.now }) {
       isLive: isLiveStream(doc) || !Number.isFinite(video.duration),
       isAd: isAdShowing(doc),
       now: now(),
+      endsAtPrefix,
     });
 
     const span = ensureSpanLast(container);

@@ -49,18 +49,18 @@ page, then reload the YouTube tab.
 - The **toolbar icon** opens the default mode and the option to hide the display at 1x speed
   (on by default, applies to the total duration)
 
-The interface is currently German only. These are the three modes:
+The interface follows your browser language: German, otherwise English. These are the three modes:
 
 | Mode | Display | Meaning |
 |---|---|---|
 | Total duration | `(28:48 @1.5x)` | How long the video takes at this speed, without sponsor segments |
 | Time remaining | `(~21:38 @1.5x)` | How long it still runs from the current position |
-| End time | `(fertig 21:47)` | The time of day when it ends (`fertig` means "done") |
+| End time | `(done 21:47)` | The time of day when it ends |
 
 Sponsor segments are only subtracted from the **total duration**. SponsorBlock's number covers
 *all* segments, not just the upcoming ones. Time remaining and end time are therefore calculated
 without the deduction; the `~` marks the time remaining as approximate in that case. See
-[ADR 0001](docs/adr/0001-sponsorblock-kopplung-ueber-dom-span.md) (German).
+[ADR 0001](docs/adr/en/0001-sponsorblock-coupling-via-dom-span.md).
 
 ## Privacy
 
@@ -98,7 +98,6 @@ When reporting a problem, please include your browser, the extension version and
 - No total time remaining for playlists.
 - Desktop YouTube on `www.youtube.com` only: no Shorts, YouTube Music, `m.youtube.com` or embeds
   via `youtube-nocookie.com`.
-- German interface only.
 - The link to SponsorBlock relies on its display (`#sponsorBlockDurationAfterSkips`), as there is no
   official interface. If that changes, the time is calculated without the deduction; the display
   does not break. If SponsorBlock's option for showing the time without skips is off, there is
@@ -116,18 +115,19 @@ npm run test:watch
 ```
 
 `dist/content.js` is checked in and must be rebuilt after every change in `src/`; otherwise a test
-fails (see [ADR 0002](docs/adr/0002-kein-build-schritt.md), German).
+fails (see [ADR 0002](docs/adr/en/0002-bundled-checked-in-content-script.md)).
 
 | Path | Contents |
 |---|---|
 | `src/core/` | Pure logic: no DOM, no clock, no `chrome.*` |
 | `src/content/` | The only place that knows YouTube's and SponsorBlock's DOM |
 | `src/popup/` | Toolbar popup |
+| `_locales/` | Interface text in German and English |
 | `src/settings.js` | `chrome.storage.sync` behind a synchronous interface |
 | `build.js` | esbuild bundle to `dist/content.js` |
 | `tools/` | Console snippets for troubleshooting on the real player |
-| `docs/adr/` | Architecture decisions (German) |
-| `CONTEXT.md` | Project terminology (German) |
+| `docs/adr/` | Architecture decisions (English in `docs/adr/en/`) |
+| `CONTEXT.en.md` | Project terminology |
 
 ## License and disclaimer
 

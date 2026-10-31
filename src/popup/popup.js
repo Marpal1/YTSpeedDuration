@@ -1,11 +1,10 @@
 import { MODES } from "../core/modes.js";
-import { messages } from "../core/messages.js";
 
 /**
  * Baut die Popup-Oberflaeche in `form` und verbindet sie mit dem Store.
  * Kennt weder chrome.* noch das Dokument des Players — nur das Formular.
  */
-export function bindPopup(form, store) {
+export function bindPopup(form, store, messages) {
   const doc = form.ownerDocument;
   const { mode, hideAtNormalSpeed } = store.read();
 

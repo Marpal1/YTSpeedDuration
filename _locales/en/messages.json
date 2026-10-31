@@ -1,0 +1,10 @@
+{
+  "extDescription": { "message": "Shows the real duration of a YouTube video at the current playback speed, next to YouTube's time display." },
+  "endsAtPrefix": { "message": "done" },
+  "modeTotal": { "message": "Total duration at current speed" },
+  "modeRemaining": { "message": "Real time remaining" },
+  "modeEndsAt": { "message": "Time of day when the video ends" },
+  "hideAtNormalSpeed": { "message": "Hide at 1x speed" },
+  "defaultModeLegend": { "message": "Default mode" },
+  "hint": { "message": "Click the time in the player to switch modes." }
+}

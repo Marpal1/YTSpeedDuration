@@ -15,20 +15,6 @@
     return match[1].split(":").reduce((total, part) => total * 60 + Number(part), 0);
   }
 
-  // src/core/messages.js
-  var messages = {
-    endsAtPrefix: "fertig",
-    popupTitle: "Speed Duration",
-    modeLabels: {
-      total: "Gesamtdauer bei aktueller Geschwindigkeit",
-      remaining: "Verbleibende reale Zeit",
-      endsAt: "Uhrzeit am Videoende"
-    },
-    hideAtNormalSpeed: "Bei 1x-Geschwindigkeit ausblenden",
-    defaultModeLegend: "Standard-Modus",
-    hint: "Klick auf die Zeit im Player wechselt den Modus."
-  };
-
   // src/core/compute.js
   function formatRate(rate) {
     return String(Math.round(rate * 100) / 100);
@@ -47,7 +33,8 @@
       hideAtNormalSpeed,
       now,
       isLive,
-      isAd
+      isAd,
+      endsAtPrefix
     } = state;
     if (isAd || isLive) return "";
     if (!Number.isFinite(duration) || duration <= 0) return "";
@@ -55,7 +42,7 @@
     const remaining = Math.ceil((duration - currentTime) / playbackRate);
     if (mode === "endsAt") {
       const endsAt = Math.round((now + remaining * 1e3) / 6e4) * 6e4;
-      return `(${messages.endsAtPrefix} ${formatWallClock(endsAt)})`;
+      return `(${endsAtPrefix} ${formatWallClock(endsAt)})`;
     }
     const suffix = ` @${formatRate(playbackRate)}x`;
     if (mode === "remaining") {
@@ -124,7 +111,7 @@
 
   // src/content/controller.js
   var VIDEO_EVENTS = ["ratechange", "durationchange", "loadedmetadata", "timeupdate", "seeked"];
-  function createController({ doc, store, now = Date.now }) {
+  function createController({ doc, store, now = Date.now, endsAtPrefix }) {
     const teardown = [];
     const unbind = [];
     let boundContainer = null;
@@ -147,7 +134,8 @@
         sponsorSeconds: readSponsorSeconds(doc),
         isLive: isLiveStream(doc) || !Number.isFinite(video.duration),
         isAd: isAdShowing(doc),
-        now: now()
+        now: now(),
+        endsAtPrefix
       });
       const span = ensureSpanLast(container);
       if (span.textContent !== text) span.textContent = text;
@@ -249,6 +237,21 @@
     };
   }
 
+  // src/core/messages.js
+  function createMessages(getMessage) {
+    return {
+      endsAtPrefix: getMessage("endsAtPrefix"),
+      modeLabels: {
+        total: getMessage("modeTotal"),
+        remaining: getMessage("modeRemaining"),
+        endsAt: getMessage("modeEndsAt")
+      },
+      hideAtNormalSpeed: getMessage("hideAtNormalSpeed"),
+      defaultModeLegend: getMessage("defaultModeLegend"),
+      hint: getMessage("hint")
+    };
+  }
+
   // src/content/index.js
   function mark(state, detail) {
     const root = document.documentElement;
@@ -259,7 +262,8 @@
   (async () => {
     try {
       const store = await createStore(chrome.storage.sync);
-      createController({ doc: document, store }).attach();
+      const { endsAtPrefix } = createMessages((key) => chrome.i18n.getMessage(key));
+      createController({ doc: document, store, endsAtPrefix }).attach();
       mark("ready");
     } catch (error) {
       mark("error", error?.message ?? error);

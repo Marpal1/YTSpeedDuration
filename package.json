@@ -1,6 +1,6 @@
 {
   "name": "speed-duration-for-youtube",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "license": "MIT",
   "description": "Zeigt neben YouTubes Zeitangabe die an die Wiedergabegeschwindigkeit angepasste Dauer.",

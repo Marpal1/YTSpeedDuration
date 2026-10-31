@@ -11,6 +11,7 @@ const state = (overrides) => ({
   isLive: false,
   isAd: false,
   hideAtNormalSpeed: true,
+  endsAtPrefix: "fertig",
   now: Date.parse("2026-09-05T20:00:00"),
   ...overrides,
 });
@@ -94,6 +95,16 @@ describe("Modus endsAt", () => {
       now: Date.parse("2026-09-05T09:00:00"),
     }));
     expect(text).toBe("(fertig 09:05)");
+  });
+
+  it("nimmt das Praefix der aktiven Sprache", () => {
+    const text = computeDisplay(state({
+      mode: "endsAt",
+      currentTime: 2400,
+      endsAtPrefix: "done",
+      now: Date.parse("2026-09-05T09:00:00"),
+    }));
+    expect(text).toBe("(done 09:05)");
   });
 });
 

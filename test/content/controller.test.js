@@ -4,7 +4,7 @@ import { createController } from "../../src/content/controller.js";
 
 let controller = null;
 const start = (doc, store, now = () => Date.parse("2026-09-05T20:00:00")) => {
-  controller = createController({ doc, store, now });
+  controller = createController({ doc, store, now, endsAtPrefix: "fertig" });
   controller.attach();
   return controller;
 };

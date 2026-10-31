@@ -11,6 +11,7 @@
  */
 import { createController } from "./controller.js";
 import { createStore } from "../settings.js";
+import { createMessages } from "../core/messages.js";
 
 /**
  * Zustandsmarker am <html>-Element. Nur zur Fehlersuche von aussen —
@@ -28,7 +29,8 @@ mark("boot");
 (async () => {
   try {
     const store = await createStore(chrome.storage.sync);
-    createController({ doc: document, store }).attach();
+    const { endsAtPrefix } = createMessages((key) => chrome.i18n.getMessage(key));
+    createController({ doc: document, store, endsAtPrefix }).attach();
     mark("ready");
   } catch (error) {
     mark("error", error?.message ?? error);
