@@ -1,5 +1,7 @@
 # Speed Duration for YouTube
 
+**Deutsch** · [English](README.en.md)
+
 Browser-Erweiterung, die im YouTube-Player zeigt, wie lange ein Video bei der eingestellten
 Wiedergabegeschwindigkeit wirklich dauert. Ist [SponsorBlock](https://sponsor.ajay.app/)
 installiert, wird dessen Dauer ohne Sponsorsegmente als Grundlage genommen.
@@ -11,10 +13,6 @@ installiert, wird dessen Dauer ohne Sponsorsegmente als Grundlage genommen.
 ```
 
 `(43:12)` stammt von SponsorBlock, `(28:48 @1.5x)` von dieser Erweiterung.
-
-> **English:** Shows the real viewing time of a YouTube video at the current playback speed,
-> minus SponsorBlock segments if SponsorBlock is installed. The interface is German only for
-> now. Works in Chromium-based browsers; install it as an unpacked extension (see below).
 
 ## Funktionen
 
