@@ -13,3 +13,4 @@ node_modules/
 # Lokal, nicht fuer die Veroeffentlichung
 .claude/settings.json
 .scratch/
+release/

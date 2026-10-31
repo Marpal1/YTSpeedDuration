@@ -28,9 +28,10 @@ installiert, wird dessen Dauer ohne Sponsorsegmente als Grundlage genommen.
 Für Brave, Chrome, Edge und andere Chromium-Browser. Die Erweiterung ist nicht in einem
 Store verfügbar und wird deshalb im Entwicklermodus geladen.
 
-1. Projekt herunterladen und entpacken, oder klonen:
+1. ZIP aus den [Releases](https://github.com/Marpal1/YTSpeedDuration/releases) herunterladen und
+   entpacken, oder klonen:
    ```bash
-   git clone https://github.com/Marpal1/YoutubeDuration.git
+   git clone https://github.com/Marpal1/YTSpeedDuration.git
    ```
 2. Erweiterungsseite öffnen: `chrome://extensions`, `brave://extensions` oder `edge://extensions`
 3. **Entwicklermodus** einschalten
